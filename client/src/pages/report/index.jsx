@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { notification, Typography } from "antd";
+import { notification, Pagination, Typography } from "antd";
 import axios from "axios";
 import Filters from "./Filters";
 import ReportTabe from "./ReportTabe";
@@ -35,11 +35,13 @@ const ReportWrap = styled.div`
 
 const Report = () => {
     const [view, setview] = useState("detailed");
-    const [page, setpage] = useState(5);
+    const [entries, setEntries] = useState(5);
     const [date, setdate] = useState();
     const [data, setdata] = useState();
     const [statusActive, setstatusActive] = useState();
     const [languageFilter, setLanguageFilter] = useState();
+    const [currentPage, setcurrentPage] = useState(1);
+    const [total, settotal] = useState();
 
     useEffect(() => {
         let params = {};
@@ -49,15 +51,20 @@ const Report = () => {
         }
         if (statusActive) params['statusId'] = statusActive;
         if (languageFilter) params['languageId'] = languageFilter;
+        params['page'] = currentPage;
+        params['entries'] = entries;
         axios.get(`api/${view}`, {
             params: params
-        }).then((response) => setdata(response.data)).catch(err => {
+        }).then((response) => {
+            setdata(response.data.results);
+            settotal(response.data.total);
+        }).catch(err => {
             notification.error({
                 message: 'Error',
                 description: 'Unable to get data.'
             })
         });
-    }, [view, date, statusActive, languageFilter]);
+    }, [view, date, statusActive, languageFilter, currentPage, entries]);
 
     return (
         <Wrap>
@@ -73,12 +80,24 @@ const Report = () => {
                             <strong>{data.length}</strong> results {date && `from ${moment(date[0]).format('YYYY/MM/DD')} to ${moment(date[1]).format('YYYY/MM/DD')}`} as <strong>{view}</strong> view
                         </Typography.Text>
                     )}
-                    <Filters setLanguageFilter={setLanguageFilter} setstatusActive={setstatusActive} page={page} setpage={setpage} setdate={setdate} setview={setview} view={view}/>
-                    <ReportTabe data={data} view={view} page={page}/>
+                    <Filters setLanguageFilter={setLanguageFilter} setstatusActive={setstatusActive} entries={entries} setEntries={setEntries} setdate={setdate} setview={setview} view={view} />
+                    <ReportTabe data={data} view={view} />
+                    <Pagination style={{marginTop: '25px'}} showTotal={(total, range) => <TotalEntries range={range} total={total} />} pageSize={entries} current={currentPage} onChange={value => setcurrentPage(value)} total={total} />
                 </ReportWrap>
             </Container>
         </Wrap>
     );
 };
+
+const TotalEntries = (props) => {
+
+    const { total, range } = props;
+
+    return (
+        <React.Fragment>
+            Showing {range[0]} to {range[1]} of {total} entries
+        </React.Fragment>
+    )
+}
 
 export default Report;

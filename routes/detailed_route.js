@@ -10,21 +10,29 @@ const router = Router();
 router
     .route('/detailed')
     .get((req, res, next) => {
-        let filtered = detailed;
-        if (req.query.statusId) {
-            filtered = filtered.filter(data => data.statusId == req.query.statusId);
-        }
-        if (req.query.startDate) {
-            filtered = filtered.filter(data => moment(data.date).isSameOrAfter(req.query.startDate));
-        }
-        if (req.query.endDate) {
-            filtered = filtered.filter(data => moment(data.date).isSameOrBefore(req.query.endDate));
-        }
-        if (req.query.languageId) {
-            filtered = filtered.filter(data => data.languageId == req.query.languageId);
-        }
         try {
-            res.status(200).json(filtered);
+            let filtered = detailed['results'];
+            let data = {};
+            data['total'] = detailed['total'];
+            const page = Number(req.query.page);
+            const step = Number(req.query.entries);
+            const start = (page - 1) * step;
+            const end = page * (step - 1);
+            filtered = filtered.filter((data, index) => ((index >= start) && (index <= end)))
+            if (req.query.statusId) {
+                filtered = filtered.filter(data => data.statusId == req.query.statusId);
+            }
+            if (req.query.startDate) {
+                filtered = filtered.filter(data => moment(data.date).isSameOrAfter(req.query.startDate));
+            }
+            if (req.query.endDate) {
+                filtered = filtered.filter(data => moment(data.date).isSameOrBefore(req.query.endDate));
+            }
+            if (req.query.languageId) {
+                filtered = filtered.filter(data => data.languageId == req.query.languageId);
+            }
+            data['results'] = filtered;
+            res.status(200).json(data);
         } catch (e) {
             res.status(400).send(e.message);
         }

@@ -15,7 +15,7 @@ const InputLabel = styled.label`
 
 const Filters = (props) => {
 
-    const { setview, view, setdate, setpage, page, setstatusActive, setLanguageFilter } = props;
+    const { setview, view, setdate, setEntries, entries, setstatusActive, setLanguageFilter } = props;
     const [status, setstatus] = useState();
     const [langauages, setlangauages] = useState();
 
@@ -77,7 +77,7 @@ const Filters = (props) => {
             <Row justify="space-between" align="middle" style={{ margin: '25px 0' }}>
                 <Col>
                     <label>Show </label>
-                    <Select onSelect={value => setpage(value)} defaultValue={page}>
+                    <Select onSelect={value => setEntries(value)} defaultValue={entries}>
                         <Select.Option value={5}>5</Select.Option>
                         <Select.Option value={10}>10</Select.Option>
                         <Select.Option value={20}>20</Select.Option>

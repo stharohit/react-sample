@@ -11,7 +11,7 @@ const StyledTable = styled(Table)`
 
 const ReportTabe = (props) => {
 
-    const { data, view, page } = props;
+    const { data, view } = props;
     let columns;
 
     if (view === 'detailed') {
@@ -208,16 +208,7 @@ const ReportTabe = (props) => {
         ];
     }
 
-    return <StyledTable rowKey='id' pagination={{ pageSize: page, showTotal: (total, range) => <Result total={total} range={range}/>, position: ['bottomRight'] }} columns={columns} dataSource={data && data} />
-}
-
-const Result = (props) => {
-
-    const { total, range } = props;
-
-    return (
-        <React.Fragment>Showing {range[0]} to {range[1]} of {total} entries</React.Fragment>
-    )
+    return <StyledTable rowKey='id' pagination={false} columns={columns} dataSource={data && data} />
 }
 
 export default ReportTabe
