@@ -14,11 +14,6 @@ router
             let filtered = detailed['results'];
             let data = {};
             data['total'] = detailed['total'];
-            const page = Number(req.query.page);
-            const step = Number(req.query.entries);
-            const start = (page - 1) * step;
-            const end = page * (step - 1);
-            filtered = filtered.filter((data, index) => ((index >= start) && (index <= end)))
             if (req.query.statusId) {
                 filtered = filtered.filter(data => data.statusId == req.query.statusId);
             }
@@ -31,6 +26,7 @@ router
             if (req.query.languageId) {
                 filtered = filtered.filter(data => data.languageId == req.query.languageId);
             }
+            filtered = filtered.slice((req.query.page - 1) * req.query.entries, req.query.page * req.query.entries);
             data['results'] = filtered;
             res.status(200).json(data);
         } catch (e) {
