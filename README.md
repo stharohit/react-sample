@@ -1,30 +1,11 @@
-# node-react-starter
-A simple fullstack starter application using Node.js, Express.js, React.js and MongoDB
+# Simple React and Node js application
 
-To run this project you need to add the backend and frontend dependencies.
-In the root of the project run the following command
+Basic implementation of API and filtering the data through api.
 
-```
-$ npm install
-```
+## How to run this app?
 
-Then, navigate to the client directory and run the following command:
+It is easy. Clone this repo to your directory and do the following:-
 
-```
-recommended
-$ yarn
-```
-or
-```
-npm install
-```
-
-### Running the application
-
-*To run this application, you must have MongoDB up and running*
-
-To run the application, use the following command:
-
-```
-$ npm run dev
-```
+> 1. "npm install" in main directory.
+> 2. "npm install" in client directory.
+> 3. "npm run dev" to run both react and node js concurrently.

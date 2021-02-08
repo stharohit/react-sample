@@ -1,0 +1,14 @@
+[
+    {
+        "statusId": 1,
+        "status": "Sample Not Submitted"
+    },
+    {
+        "statusId": 2,
+        "status": "Send for Rework"
+    },
+    {
+        "statusId": 3,
+        "status": "Cancelled"
+    }
+]

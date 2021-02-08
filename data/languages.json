@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "languageName": "Hindi"
+    },
+    {
+        "id": 2,
+        "languageName": "Nepali"
+    },
+    {
+        "id": 3,
+        "languageName": "Cantonese"
+    },
+    {
+        "id": 4,
+        "languageName": "Bengali"
+    },
+    {
+        "id": 5,
+        "languageName": "Tamil"
+    },
+    {
+        "id": 6,
+        "languageName": "Malyali"
+    },
+    {
+        "id": 7,
+        "languageName": "English"
+    }
+]
